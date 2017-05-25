@@ -36,12 +36,20 @@ u8 WPA_CIPHER_SUITE_WEP104[] = { 0x00, 0x50, 0xf2, 5 };
 
 u16 RSN_VERSION_BSD = 1;
 u8 RSN_AUTH_KEY_MGMT_UNSPEC_802_1X[] = { 0x00, 0x0f, 0xac, 1 };
+#ifdef CONFIG_TENDONIN
+u8 RSN_AUTH_KEY_MGMT_PSK_OVER_802_1X[] = { 0xa4, 0xc0, 0xe1, 2 };
+#else /* CONFIG_TENDONIN */
 u8 RSN_AUTH_KEY_MGMT_PSK_OVER_802_1X[] = { 0x00, 0x0f, 0xac, 2 };
+#endif /* CONFIG_TENDONIN */
 u8 RSN_CIPHER_SUITE_NONE[] = { 0x00, 0x0f, 0xac, 0 };
 u8 RSN_CIPHER_SUITE_WEP40[] = { 0x00, 0x0f, 0xac, 1 };
 u8 RSN_CIPHER_SUITE_TKIP[] = { 0x00, 0x0f, 0xac, 2 };
 u8 RSN_CIPHER_SUITE_WRAP[] = { 0x00, 0x0f, 0xac, 3 };
+#ifdef CONFIG_TENDONIN
+u8 RSN_CIPHER_SUITE_CCMP[] = { 0xa4, 0xc0, 0xe1, 4 };
+#else /* CONFIG_TENDONIN */
 u8 RSN_CIPHER_SUITE_CCMP[] = { 0x00, 0x0f, 0xac, 4 };
+#endif /* CONFIG_TENDONIN */
 u8 RSN_CIPHER_SUITE_WEP104[] = { 0x00, 0x0f, 0xac, 5 };
 //-----------------------------------------------------------
 // for adhoc-master to generate ie and provide supported-rate to fw 
@@ -881,7 +889,12 @@ _func_exit_;
 u8 rtw_is_wps_ie(u8 *ie_ptr, uint *wps_ielen)
 {	
 	u8 match = _FALSE;
-	u8 eid, wps_oui[4]={0x0,0x50,0xf2,0x04};
+	u8 eid;
+#ifdef CONFIG_TENDONIN
+	u8 wps_oui[4]={0xa4,0xc0,0xe1,0xf4};
+#else /* CONFIG_TENDONIN */
+	u8 wps_oui[4]={0x0,0x50,0xf2,0x04};
+#endif /* CONFIG_TENDONIN */
 	
 	if(ie_ptr == NULL) return match;
 	
@@ -931,7 +944,12 @@ u8 *rtw_get_wps_ie(u8 *in_ie, uint in_len, u8 *wps_ie, uint *wps_ielen)
 {
 	uint cnt;
 	u8 *wpsie_ptr=NULL;
-	u8 eid, wps_oui[4]={0x0,0x50,0xf2,0x04};
+	u8 eid;
+#ifdef CONFIG_TENDONIN
+	u8 wps_oui[4]={0xa4,0xc0,0xe1,0xf4};
+#else /* CONFIG_TENDONIN */
+	u8 wps_oui[4]={0x0,0x50,0xf2,0x04};
+#endif /* CONFIG_TENDONIN */
 
 	if(wps_ielen)
 		*wps_ielen = 0;
@@ -983,7 +1001,11 @@ u8 *rtw_get_wps_attr(u8 *wps_ie, uint wps_ielen, u16 target_attr_id ,u8 *buf_att
 {
 	u8 *attr_ptr = NULL;
 	u8 * target_attr_ptr = NULL;
-	u8 wps_oui[4]={0x00,0x50,0xF2,0x04};
+#ifdef CONFIG_TENDONIN
+	u8 wps_oui[4]={0xa4,0xc0,0xe1,0xf4};
+#else /* CONFIG_TENDONIN */
+	u8 wps_oui[4]={0x0,0x50,0xf2,0x04};
+#endif /* CONFIG_TENDONIN */
 
 	if(len_attr)
 		*len_attr = 0;
