@@ -73,6 +73,7 @@ CONFIG_REDUCE_TX_CPU_LOADING = n
 CONFIG_BR_EXT = y
 CONFIG_ANTENNA_DIVERSITY = n
 CONFIG_TDLS = n
+CONFIG_TENDONIN = y
 ######################## Wake On Lan ##########################
 CONFIG_WOWLAN = n
 CONFIG_GPIO_WAKEUP = n
@@ -873,6 +874,10 @@ endif
 
 ifeq ($(CONFIG_TDLS), y)
 EXTRA_CFLAGS += -DCONFIG_TDLS
+endif
+
+ifeq ($(CONFIG_TENDONIN), y)
+EXTRA_CFLAGS += -DCONFIG_TENDONIN
 endif
 
 ifeq ($(CONFIG_PLATFORM_I386_PC), y)
